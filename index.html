@@ -1,110 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Valentine 💘</title>
+const cheesyPrompts = [
+  `Hey… that kinda hurt 😢<br/>What’s your answer now?`,
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  `Wow. I just told my heart to stay strong for this.<br/>
+   Last chance before I start overthinking everything 🥲<br/>
+   Are you really sure?`,
 
-  <style>
-    body {
-      background: linear-gradient(180deg, #ffd0e5 0%, #ffe8f2 36%, #ffffff 100%);
-    }
-  </style>
-</head>
+  `Okay but listen—<br/>
+   Somewhere, a playlist just lost its meaning 💔<br/>
+   Are you emotionally prepared to say no again?`,
 
-<body class="min-h-screen flex items-center justify-center">
+  `I hope you know this is officially character development for me.<br/>
+   Enemies-to-lovers arc still possible though 👀<br/>
+   Still sticking with no?`,
 
-  <div class="text-center max-w-xl px-4">
-    <h1 id="message" class="text-3xl md:text-4xl font-bold text-pink-600 mb-8">
-      Will you be my Valentine? ❤️
-    </h1>
-
-    <div id="buttons" class="flex gap-6 justify-center">
-      <button
-        id="yesBtn"
-        class="px-6 py-3 bg-green-500 text-white rounded-md text-xl hover:bg-green-400 transition"
-      >
-        Yes
-      </button>
-
-      <button
-        id="noBtn"
-        class="px-6 py-3 bg-red-500 text-white rounded-md text-xl hover:bg-red-700 transition"
-      >
-        No
-      </button>
-    </div>
-  </div>
-
-<script>
-  const messageEl = document.getElementById("message");
-  const yesBtn = document.getElementById("yesBtn");
-  const noBtn = document.getElementById("noBtn");
-
-  const DRIVE_LINK =
-    "https://drive.google.com/file/d/1d536ygyg9k3JMu1w-xkrK8qsBNjQ2Rz2/view?usp=drive_link";
-
-  const cheesyPrompts = [
-    `Hey… that kinda hurt 😢<br/>Are you sure you want to say no?`,
-
-    `Wow. I just told my heart to stay strong for this.<br/>
-     Last chance before I start overthinking everything 🥲<br/>
-     Are you really sure?`,
-
-    `Okay but listen—<br/>
-     Somewhere, a playlist just lost its meaning 💔<br/>
-     Are you emotionally prepared to say no again?`,
-
-    `I hope you know this is officially character development for me.<br/>
-     Enemies-to-lovers arc still possible though 👀<br/>
-     Still sticking with no?`,
-
-    `Alright. I’ve accepted my fate.<br/>
-     But before I dramatically stare at the ceiling at 2 a.m…<br/>
-     Is this REALLY your final answer?`
-  ];
-
-  let noCount = 0;
-
-  function openDrive() {
-    window.location.href = DRIVE_LINK;
-  }
-
-  yesBtn.addEventListener("click", () => {
-    messageEl.innerHTML =
-      `GOOD CHOICE 😌<br/>Congratulations on unlocking premium Valentine content 💝`;
-
-    document.getElementById("buttons").remove();
-
-    setTimeout(openDrive, 1200);
-  });
-
-  noBtn.addEventListener("click", () => {
-
-    // If NO at first stage → open link
-    if (noCount === 0) {
-      openDrive();
-      return;
-    }
-
-    // Show next cheesy prompt
-    if (noCount <= cheesyPrompts.length) {
-      messageEl.innerHTML = cheesyPrompts[noCount - 1];
-      noCount++;
-    }
-
-    // After last prompt, stop increasing
-    if (noCount > cheesyPrompts.length) {
-      noCount = cheesyPrompts.length;
-    }
-  });
-
-  // Initialize first NO state
-  noBtn.addEventListener("click", () => {}, { once: true });
-  noCount = 1;
-</script>
-
-</body>
-</html>
+  `Alright. I’ve accepted my fate.<br/>
+   But before I dramatically stare at the ceiling at 2 a.m…<br/>
+   Is this REALLY your final answer?`
+];
