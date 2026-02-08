@@ -6,7 +6,6 @@
   <title>Valentine 💘</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <style>
     body {
@@ -17,17 +16,99 @@
 
 <body class="min-h-screen flex items-center justify-center">
 
-  <div class="text-center">
-    <img
-      id="imageDisplay"
-      src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
-      class="mx-auto rounded-md h-64"
-      alt="cute gif"
-    />
-
-    <h1 id="question" class="text-4xl font-bold text-pink-600 my-6">
+  <div class="text-center max-w-md">
+    <h1 id="text" class="text-4xl font-bold text-pink-600 mb-8">
       Will you be my Valentine? ❤️
     </h1>
 
-    <div id="buttons" class="flex gap-4 justify-center">
-      <but
+    <div id="buttons" class="flex gap-6 justify-center">
+      <button id="yesBtn"
+        class="px-6 py-3 bg-green-500 text-white rounded-md text-xl hover:bg-green-400">
+        Yes
+      </button>
+
+      <button id="noBtn"
+        class="px-6 py-3 bg-red-500 text-white rounded-md text-xl hover:bg-red-700">
+        No
+      </button>
+    </div>
+  </div>
+
+<script>
+  const text = document.getElementById("text");
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+
+  const DRIVE_LINK =
+    "https://drive.google.com/file/d/1d536ygyg9k3JMu1w-xkrK8qsBNjQ2Rz2/view?usp=drive_link";
+
+  const cheesyLines = [
+    "Hey, you're breaking my heart 💔",
+    "Are you REALLY sure? 🥺",
+    "I thought we had something special 😭",
+    "This is emotionally devastating 💘",
+    "Okay wow… this hurts 😔"
+  ];
+
+  let stage = "start"; // start | confirmYes | cheesy
+  let noCount = 0;
+
+  function openLink() {
+    window.location.href = DRIVE_LINK;
+  }
+
+  yesBtn.addEventListener("click", () => {
+
+    // First YES
+    if (stage === "start") {
+      text.textContent = "Are you sure? 😌";
+      stage = "confirmYes";
+      return;
+    }
+
+    // YES after confirmation → open link
+    if (stage === "confirmYes") {
+      openLink();
+      return;
+    }
+
+    // YES after cheesy loop
+    if (stage === "cheesy") {
+      openLink();
+    }
+  });
+
+  noBtn.addEventListener("click", () => {
+
+    // NO at start
+    if (stage === "start") {
+      text.textContent = "Hey, you're breaking my heart 💔 Are you sure?";
+      stage = "cheesy";
+      return;
+    }
+
+    // NO after "Are you sure?" → open link
+    if (stage === "confirmYes") {
+      openLink();
+      return;
+    }
+
+    // Cheesy loop
+    if (stage === "cheesy") {
+      if (noCount < cheesyLines.length) {
+        text.textContent = cheesyLines[noCount];
+        noCount++;
+      }
+
+      // After 5 NOs → remove No button
+      if (noCount === cheesyLines.length) {
+        noBtn.remove();
+        text.textContent =
+          "Alright… I’ll stop asking 😌 Only one choice left.";
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
