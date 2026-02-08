@@ -16,98 +16,94 @@
 
 <body class="min-h-screen flex items-center justify-center">
 
-  <div class="text-center max-w-md">
-    <h1 id="text" class="text-4xl font-bold text-pink-600 mb-8">
+  <div class="text-center max-w-xl px-4">
+    <h1 id="message" class="text-3xl md:text-4xl font-bold text-pink-600 mb-8">
       Will you be my Valentine? ❤️
     </h1>
 
     <div id="buttons" class="flex gap-6 justify-center">
-      <button id="yesBtn"
-        class="px-6 py-3 bg-green-500 text-white rounded-md text-xl hover:bg-green-400">
+      <button
+        id="yesBtn"
+        class="px-6 py-3 bg-green-500 text-white rounded-md text-xl hover:bg-green-400 transition"
+      >
         Yes
       </button>
 
-      <button id="noBtn"
-        class="px-6 py-3 bg-red-500 text-white rounded-md text-xl hover:bg-red-700">
+      <button
+        id="noBtn"
+        class="px-6 py-3 bg-red-500 text-white rounded-md text-xl hover:bg-red-700 transition"
+      >
         No
       </button>
     </div>
   </div>
 
 <script>
-  const text = document.getElementById("text");
+  const messageEl = document.getElementById("message");
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
 
   const DRIVE_LINK =
     "https://drive.google.com/file/d/1d536ygyg9k3JMu1w-xkrK8qsBNjQ2Rz2/view?usp=drive_link";
 
-  const cheesyLines = [
-    "Hey, you're breaking my heart 💔",
-    "Are you REALLY sure? 🥺",
-    "I thought we had something special 😭",
-    "This is emotionally devastating 💘",
-    "Okay wow… this hurts 😔"
+  const cheesyPrompts = [
+    `Hey… that kinda hurt 😢<br/>Are you sure you want to say no?`,
+
+    `Wow. I just told my heart to stay strong for this.<br/>
+     Last chance before I start overthinking everything 🥲<br/>
+     Are you really sure?`,
+
+    `Okay but listen—<br/>
+     Somewhere, a playlist just lost its meaning 💔<br/>
+     Are you emotionally prepared to say no again?`,
+
+    `I hope you know this is officially character development for me.<br/>
+     Enemies-to-lovers arc still possible though 👀<br/>
+     Still sticking with no?`,
+
+    `Alright. I’ve accepted my fate.<br/>
+     But before I dramatically stare at the ceiling at 2 a.m…<br/>
+     Is this REALLY your final answer?`
   ];
 
-  let stage = "start"; // start | confirmYes | cheesy
   let noCount = 0;
 
-  function openLink() {
+  function openDrive() {
     window.location.href = DRIVE_LINK;
   }
 
   yesBtn.addEventListener("click", () => {
+    messageEl.innerHTML =
+      `GOOD CHOICE 😌<br/>Congratulations on unlocking premium Valentine content 💝`;
 
-    // First YES
-    if (stage === "start") {
-      text.textContent = "Are you sure? 😌";
-      stage = "confirmYes";
-      return;
-    }
+    document.getElementById("buttons").remove();
 
-    // YES after confirmation → open link
-    if (stage === "confirmYes") {
-      openLink();
-      return;
-    }
-
-    // YES after cheesy loop
-    if (stage === "cheesy") {
-      openLink();
-    }
+    setTimeout(openDrive, 1200);
   });
 
   noBtn.addEventListener("click", () => {
 
-    // NO at start
-    if (stage === "start") {
-      text.textContent = "Hey, you're breaking my heart 💔 Are you sure?";
-      stage = "cheesy";
+    // If NO at first stage → open link
+    if (noCount === 0) {
+      openDrive();
       return;
     }
 
-    // NO after "Are you sure?" → open link
-    if (stage === "confirmYes") {
-      openLink();
-      return;
+    // Show next cheesy prompt
+    if (noCount <= cheesyPrompts.length) {
+      messageEl.innerHTML = cheesyPrompts[noCount - 1];
+      noCount++;
     }
 
-    // Cheesy loop
-    if (stage === "cheesy") {
-      if (noCount < cheesyLines.length) {
-        text.textContent = cheesyLines[noCount];
-        noCount++;
-      }
-
-      // After 5 NOs → remove No button
-      if (noCount === cheesyLines.length) {
-        noBtn.remove();
-        text.textContent =
-          "Alright… I’ll stop asking 😌 Only one choice left.";
-      }
+    // After last prompt, stop increasing
+    if (noCount > cheesyPrompts.length) {
+      noCount = cheesyPrompts.length;
     }
   });
+
+  // Initialize first NO state
+  noBtn.addEventListener("click", () => {}, { once: true });
+  noCount = 1;
 </script>
 
 </body>
