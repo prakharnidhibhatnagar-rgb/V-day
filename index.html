@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 320px;
+      position: relative;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      color: #e63946;
+    }
+
+    button {
+      padding: 12px 22px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    #yesBtn {
+      background: #38b000;
+      color: white;
+    }
+
+    #noBtn {
+      background: #e63946;
+      color: white;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1 id="question">Will you be my Valentine? ❤️</h1>
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 🙄</button>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const question = document.getElementById("question");
+
+    const prompts = [
+      "Are you sure? 🥺",
+      "Think again… I’m really nice 😌",
+      "This button is getting tired 😏",
+      "Okay but… what if I bring chocolates? 🍫",
+      "Last chance. Destiny is watching 👀"
+    ];
+
+    let count = 0;
+
+    noBtn.addEventListener("click", () => {
+      if (count < prompts.length) {
+        question.innerText = prompts[count];
+        count++;
+      }
+
+      // Move the No button randomly
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 60);
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+
+      // Make it slightly smaller each time
+      noBtn.style.transform = `scale(${1 - count * 0.1})`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      window.location.href =
+        "https://drive.google.com/file/d/1d536ygyg9k3JMu1w-xkrK8qsBNjQ2Rz2/view?usp=drive_link";
+    });
+  </script>
+
+</body>
+</html>
